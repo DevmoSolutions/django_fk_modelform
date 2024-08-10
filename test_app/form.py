@@ -30,13 +30,6 @@ class ChildForm(forms.ModelForm):
         self.fields["parent"] = forms.ModelChoiceField(
             widget=forms.HiddenInput, initial=parent_id, queryset=Parent.objects.all()
         )
-        # self.fields["parent"] = forms.ModelChoiceField(
-        #     widget=forms.HiddenInput,
-        #     initial=kwargs["initial"]["parent_id"]
-        #     if "parent_id" in kwargs["initial"]
-        #     else None,
-        #     queryset=Parent.objects.all(),
-        # )
 
         queryset = Child.objects.filter(parent=parent_id)
         if child_id:
