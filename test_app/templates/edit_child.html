@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Child</title>
+</head>
+<body>
+    <h1>Edit Child</h1>
+    <form method="POST" action="{% url 'edit_child' child_id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Edit Child</button>
+    </form>
+</body>
+</html>

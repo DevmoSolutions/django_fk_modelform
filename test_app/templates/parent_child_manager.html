@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent and Child Manager</title>
+</head>
+<body>
+    <h1>Parent and Child Manager</h1>
+
+    <div>
+        <h2>All Parents</h2>
+        {% for parent, children in parents_with_children %}
+            <div class="parent-section">
+                <h3>{{ parent.name }}</h3>
+                <h4>Children:</h4>
+                {% if children %}
+                    <ul>
+                        {% for child in children %}
+                            <li>
+                                {{ child.name }}
+                                <a href="{% url 'edit_child' child.id %}">Edit</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No children found.</p>
+                {% endif %}
+                <form method="GET" action="{% url 'create_child' parent.id %}">
+                    <button type="submit" class="add-child-btn">Add Child</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div>
+        <h2>Create New Parent</h2>
+        <form method="POST" action="{% url 'create_parent' %}">
+            {% csrf_token %}
+            {{ parent_form.as_p }}
+            <button type="submit">Create Parent</button>
+        </form>
+    </div>
+</body>
+</html>
