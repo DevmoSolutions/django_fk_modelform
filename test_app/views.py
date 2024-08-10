@@ -1,32 +1,37 @@
-from django.shortcuts import render,redirect
-from .models import Parent, Child
-from .form import ParentForm, ChildForm
+from django.shortcuts import redirect, render
+
+from .forms import ChildForm, ParentForm
+from .models import Child, Parent
+
 
 # Create your views here.
 def create_parent(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ParentForm(request.POST)
         if form.is_valid():
             form.save()
         return redirect("parent_child_manager")
-    return render(request, 'create_parent.html', {'form': ParentForm()})
+    return render(request, "create_parent.html", {"form": ParentForm()})
+
 
 def create_child(request, parent_id):
-    if request.method == 'POST':
-        form = ChildForm(request.POST, initial={'parent_id': parent_id})
+    if request.method == "POST":
+        form = ChildForm(request.POST, initial={"parent_id": parent_id})
         form.save()
         return redirect("parent_child_manager")
-    form = ChildForm(initial={'parent_id': parent_id})
-    return render(request, 'create_child.html', {'form': form, 'parent_id': parent_id})
+    form = ChildForm(initial={"parent_id": parent_id})
+    return render(request, "create_child.html", {"form": form, "parent_id": parent_id})
+
 
 def edit_child(request, child_id):
     child = Child.objects.get(id=child_id)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ChildForm(request.POST, instance=child)
         form.save()
-        return redirect('parent_child_manager')
+        return redirect("parent_child_manager")
     form = ChildForm(instance=child)
-    return render(request, 'edit_child.html', {'form': form, 'child_id': child.id})
+    return render(request, "edit_child.html", {"form": form, "child_id": child.id})
+
 
 def parent_child_manager(request):
     parents = Parent.objects.all()
