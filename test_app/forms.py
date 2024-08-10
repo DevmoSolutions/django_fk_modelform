@@ -34,4 +34,4 @@ class ChildForm(forms.ModelForm):
         queryset = Child.objects.filter(parent=parent_id)
         if child_id:
             queryset = queryset.exclude(id=child_id)
-        self.fields["favorite_siblings"].queryset = queryset
+            self.fields["favorite_siblings"].queryset = queryset
